@@ -9,7 +9,7 @@
 
 <!-- If not logged in -->
 
-<p><a href="#">Login with Battle.net</a></p>
+<p><a href="/auth">Login with Battle.net</a></p>
 
 <!-- if logged in -->
 
