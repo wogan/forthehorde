@@ -9,6 +9,7 @@ export interface Token {
     token_type: "bearer"
     expires_in: number
     scope: string
+    id_token: string
 }
 
 export function redirectUrl(state: string): URL {

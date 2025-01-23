@@ -5,9 +5,8 @@
 <h1>Warbands</h1>
 
 <nav>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/warband">Warband</a>
+	<a href="/">Home</a>
+	<a href="/about">About</a>
 </nav>
 
 {@render children()}

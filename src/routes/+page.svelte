@@ -1,22 +1,13 @@
-
 <script lang="ts">
-    let displayname = "Greg"
+	let { data } = $props();
+	let username = data?.username;
 </script>
 
-<img src="/bonfire.png" alt=""/>
-
-<p>Track all of your WoW characters in one place.</p>
-
-<!-- If not logged in -->
-
-<p><a href="/auth">Login with Battle.net</a></p>
-
-<!-- if logged in -->
-
-<p>Welcome back {displayname} </p>
-
-<!-- get list of characters, sort by level desc, last login desc and take top 4 -->
-
-<!-- render media for each character -->
-
-<!-- end if -->
+{#if !!username}
+	<p>Welcome back {username}</p>
+	<!-- get list of characters, sort by level desc, last login desc and take top 4 -->
+	<p>View your <a href="/warband">warband</a></p>
+{:else}
+	<p>Track all of your WoW characters in one place.</p>
+	<p><a href="/auth">Login with Battle.net</a></p>
+{/if}

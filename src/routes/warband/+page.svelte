@@ -8,14 +8,14 @@
 <table>
 	<thead>
 		<tr>
-			<td>Name</td>
-			<td>Class</td>
-			<td>Race</td>
-			<td>Level</td>
-			<td>Gender</td>
-			<td>Faction</td>
-			<td>Spec</td>
-			<td>Guild</td>
+			<th>Name</th>
+			<th>Class</th>
+			<th>Race</th>
+			<th>Level</th>
+			<th>Gender</th>
+			<th>Faction</th>
+			<th>Spec</th>
+			<th>Guild</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,3 +33,7 @@
 		{/each}
 	</tbody>
 </table>
+
+<style>
+	@import './style.css';
+</style>
