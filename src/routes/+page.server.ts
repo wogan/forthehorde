@@ -20,23 +20,22 @@ async function checkToken(token: string): Promise<boolean> {
 export const load = async ({ cookies, fetch }) => {
     let token = cookies.get('token')
     if (!token) {
-        console.log('no cookie', token)
         return {};
     }
     const check = await checkToken(token)
     if (!check) {
+        cookies.delete('token', { path: '/' })
         return {}
     }
     const userinfo = new URL('https://oauth.battle.net/userinfo')
-    userinfo.searchParams.append('access_token', token)
+    userinfo.searchParams.append('access_token', token) // couldn't get the auth header to work
     let request = new Request(userinfo, {
         headers: {
-            'authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
         }, method: 'GET'
     })
     let response = await fetch(userinfo)
     if (!response.ok) {
-        console.log(response.status)
         return {}
     }
     let data = await response.json() as UserInfo
