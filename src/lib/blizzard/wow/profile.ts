@@ -1,8 +1,4 @@
-import type { PlayableClassOptions } from "blizzard.js/dist/resources/wow"
-
-export interface Link {
-    href: string
-}
+import type { Link, Entity, EntityWithSlug } from "../model"
 
 export interface Profile {
     _links: {
@@ -43,15 +39,6 @@ export interface Character {
     level: number
 }
 
-export interface Entity {
-    key: Link
-    name: string
-    id: number
-}
-
-export interface EntityWithSlug extends Entity {
-    slug: string
-}
 
 export interface Guild extends Entity {
     realm: EntityWithSlug
@@ -98,5 +85,5 @@ export interface CharacterProfile {
     quests: Link
     achievements_statistics: Link
     professions: Link
-    name_search: String
+    name_search: string
 }

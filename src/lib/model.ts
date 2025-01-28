@@ -1,4 +1,4 @@
-import type { Character as BlizzardCharacter } from "./blizzard/profile";
+import type { Character as BlizzardCharacter } from "./blizzard/wow/profile";
 
 export interface Character {
     name: string;
