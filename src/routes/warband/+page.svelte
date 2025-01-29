@@ -1,8 +1,16 @@
 <script lang="ts">
+	const MAX_LEVEL = 80;
+
 	let { data } = $props();
+
+	let maxLevelCount = data.characters.filter((c) => c.level == MAX_LEVEL).length;
 </script>
 
 {#if data.characters.length > 0}
+	{#if maxLevelCount > 0}
+		<p>You have {maxLevelCount} max level characters! Good job</p>
+	{/if}
+
 	<table>
 		<thead>
 			<tr>
