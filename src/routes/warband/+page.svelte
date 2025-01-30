@@ -1,10 +1,16 @@
 <script lang="ts">
+	import { slug } from '$lib/model';
+
 	const MAX_LEVEL = 80;
 
 	let { data } = $props();
 
 	let maxLevelCount = data.characters.filter((c) => c.level == MAX_LEVEL).length;
+
+	let accounts = data.accounts;
 </script>
+
+<p>You have {accounts?.length} accounts.</p>
 
 {#if data.characters.length > 0}
 	{#if maxLevelCount > 0}
@@ -15,6 +21,7 @@
 		<thead>
 			<tr>
 				<th>Name</th>
+				<th>Realm</th>
 				<th>Class</th>
 				<th>Race</th>
 				<th>Level</th>
@@ -28,7 +35,8 @@
 			{#each data.characters as character}
 				<tr>
 					<td>{character.name}</td>
-					<td>{character.cls}</td>
+					<td>{character.realm}</td>
+					<td class={slug(character.cls)}>{character.cls}</td>
 					<td>{character.race}</td>
 					<td>{character.level}</td>
 					<td>{character.gender}</td>
@@ -45,4 +53,12 @@
 
 <style>
 	@import './style.css';
+
+	table {
+		color: white;
+		background-color: black;
+	}
+	thead {
+		color: goldenrod;
+	}
 </style>

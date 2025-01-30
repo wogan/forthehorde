@@ -1,8 +1,8 @@
 import { wow } from 'blizzard.js'
 import { BATTLE_NET_CLIENT_ID, BATTLE_NET_CLIENT_SECRET } from '$env/static/private';
 import { Character } from "$lib/model";
-import type { Profile, Character as BlizzardCharacter, CharacterProfile } from '$lib/blizzard/profile.js';
-import { isAxiosError, type AxiosResponse } from 'axios'
+import type { Profile, Character as BlizzardCharacter, CharacterProfile } from '$lib/blizzard/wow/profile.js';
+import { isAxiosError } from 'axios'
 
 export const load = async ({ cookies }) => {
     let token = cookies.get('token');
@@ -19,13 +19,18 @@ export const load = async ({ cookies }) => {
         token,
     });
     let characters: Character[] = []
+    let accounts = []
     try {
-        let profile: AxiosResponse = (await wowClient.accountProfile<Profile>({ token }));
+        let profile = (await wowClient.accountProfile<Profile>({ token }));
         for (let account of profile.data.wow_accounts) {
             let cx = account.characters.map(async (c: BlizzardCharacter) => {
-                let char = Character(c)
+                let char = Character(c, account.id)
                 try {
-                    let extra = await wowClient.characterProfile<CharacterProfile>({ name: c.name.toLowerCase(), realm: c.realm.slug, locale: 'en_US' })
+                    let extra = await wowClient.characterProfile<CharacterProfile>({
+                        name: c.name.toLowerCase(),
+                        realm: c.realm.slug,
+                        locale: 'en_US'
+                    })
                     char.guild = extra.data.guild?.name
                     char.spec = extra.data.active_spec?.name
                 } catch (e) {
@@ -34,6 +39,9 @@ export const load = async ({ cookies }) => {
             })
             let values = await Promise.all(cx)
             characters.push(...values)
+            accounts.push({
+                id: account.id
+            })
         }
     } catch (e) {
         if (isAxiosError(e)) {
@@ -41,7 +49,8 @@ export const load = async ({ cookies }) => {
         }
     }
     return {
-        characters
+        characters,
+        accounts
     }
 
 }

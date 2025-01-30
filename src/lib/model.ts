@@ -8,11 +8,12 @@ export interface Character {
     level: number;
     gender: string;
     faction: string;
+    account: number;
     spec?: string;
     guild?: string;
 }
 
-export function Character(c: BlizzardCharacter): Character {
+export function Character(c: BlizzardCharacter, account: number): Character {
     return {
         name: c.name,
         realm: c.realm.name,
@@ -21,5 +22,8 @@ export function Character(c: BlizzardCharacter): Character {
         level: c.level,
         gender: c.gender.name,
         faction: c.faction.name,
+        account
     }
 }
+
+export const slug = (string: string): string => string.replaceAll(/\W/g, '').toLowerCase()
