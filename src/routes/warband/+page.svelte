@@ -1,5 +1,11 @@
 <script lang="ts">
-	import { slug } from '$lib/model';
+	import { Character, slugify } from '$lib/model';
+	import classIcons from '$lib/data/classes.json';
+
+	const icon = (c: Character): string | null => {
+		const slug = slugify(c.cls);
+		return (classIcons as Record<string, string>)[slug];
+	};
 
 	const MAX_LEVEL = 80;
 
@@ -36,7 +42,9 @@
 				<tr>
 					<td>{character.name}</td>
 					<td>{character.realm}</td>
-					<td class={slug(character.cls)}>{character.cls}</td>
+					<td class={slugify(character.cls)}
+						><img src={icon(character)} alt="" class="icon" />{character.cls}</td
+					>
 					<td>{character.race}</td>
 					<td>{character.level}</td>
 					<td>{character.gender}</td>
@@ -60,5 +68,14 @@
 	}
 	thead {
 		color: goldenrod;
+	}
+	img.icon {
+		width: 16px;
+		height: 16px;
+		display: inline-block;
+		margin-right: 2px;
+	}
+	td {
+		padding: 1px 5px;
 	}
 </style>

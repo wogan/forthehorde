@@ -10,6 +10,14 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "bundler"
+	},
+	"ts-node": {
+		"esm": true,
+		"compilerOptions": {
+			"module": "NodeNext",
+			"moduleResolution": "NodeNext",
+			"target": "ESNext"
+		}
 	}
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files

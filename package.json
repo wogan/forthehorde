@@ -12,7 +12,8 @@
 		"lint": "eslint . && prettier --check .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"load:classes": "node --experimental-specifier-resolution=node --no-warnings --env-file=.env.local --loader ts-node/esm dev/load_classes.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.3",
@@ -20,6 +21,7 @@
 		"@sveltejs/adapter-vercel": "^5.5.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@types/node": "^22.12.0",
 		"autoprefixer": "^10.4.20",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "10.0.1",
@@ -33,6 +35,7 @@
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
 		"tailwindcss": "^3.4.17",
+		"ts-node": "^10.9.2",
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.0.0",
 		"vite": "^5.4.11",

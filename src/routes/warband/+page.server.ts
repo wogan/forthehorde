@@ -17,7 +17,7 @@ export const load = async ({ cookies }) => {
         origin: 'us',
         locale: 'en_US',
         token,
-    });
+    }, false);
     let characters: Character[] = []
     let accounts = []
     try {

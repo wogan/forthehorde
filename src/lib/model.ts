@@ -26,4 +26,4 @@ export function Character(c: BlizzardCharacter, account: number): Character {
     }
 }
 
-export const slug = (string: string): string => string.replaceAll(/\W/g, '').toLowerCase()
+export const slugify = (string: string): string => string.replaceAll(/\W/g, '').toLowerCase()
