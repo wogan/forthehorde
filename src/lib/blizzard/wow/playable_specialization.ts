@@ -23,6 +23,6 @@ export interface PlayableSpecialization extends ApiResponse {
 }
 
 export interface PlayableSpecializationMedia extends ApiResponse {
-    assets: Asset[]
+    assets: Asset<'icon'>[]
     id: number
 }

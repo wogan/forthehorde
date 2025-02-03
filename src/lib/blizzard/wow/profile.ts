@@ -1,4 +1,4 @@
-import type { Link, Entity, EntityWithSlug, ApiResponse, SpellTooltip, DefinedType } from "../model"
+import type { Link, Entity, EntityWithSlug, ApiResponse, SpellTooltip, DefinedType, Asset } from "../model"
 
 export interface Profile extends ApiResponse {
     _links: {
@@ -33,6 +33,9 @@ export interface Character {
     level: number
 }
 
+type CharacterRef = Entity & {
+    realm: EntityWithSlug
+}
 
 export interface Guild extends Entity {
     realm: EntityWithSlug
@@ -88,9 +91,7 @@ export interface CharacterProfileProtected extends ApiResponse {
     id: number
     name: string
     money: number
-    character: Entity & {
-        realm: EntityWithSlug
-    }
+    character: CharacterRef
     protected_stats: {
         total_number_deaths: number
         total_gold_gained: 1664644810
@@ -155,7 +156,12 @@ export interface CharacterSpecialization extends ApiResponse {
     }[]
     active_specialization: Entity
     active_hero_talent_tree?: Entity
-    character: Entity & {
-        realm: EntityWithSlug
-    }
+    character: CharacterRef
+}
+
+export type CharacterAsset = 'avatar' | 'inset' | 'main-raw'
+
+export interface CharacterMedia extends ApiResponse {
+    character: CharacterRef
+    assets: Omit<Asset<CharacterAsset>, 'file_data_id'>[]
 }

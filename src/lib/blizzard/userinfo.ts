@@ -1,12 +1,18 @@
-// curl -X GET
-//    'https://oauth.battle.net/userinfo'
-//    -H 'Authorization: Bearer <access token>
-
-
-export class UserInfo {
-
+export interface UserInfo {
+    sub: string
+    id: number
+    battletag: string
 }
 
 export async function userinfo(token: string): Promise<UserInfo> {
-    return Promise.resolve(new UserInfo());
+    let request = new Request('https://oauth.battle.net/userinfo', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }, method: 'GET'
+    })
+    let response = await fetch(request)
+    if (!response.ok) {
+        throw new Error('Unable to load user info')
+    }
+    return await response.json() as UserInfo
 }

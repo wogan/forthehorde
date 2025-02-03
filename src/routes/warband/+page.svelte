@@ -14,6 +14,8 @@
 	let maxLevelCount = data.characters.filter((c) => c.level == MAX_LEVEL).length;
 
 	let accounts = data.accounts;
+
+	const chars = data.characters.sort((a, b) => b.level - a.level);
 </script>
 
 <p>You have {accounts?.length} accounts.</p>
@@ -38,19 +40,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each data.characters as character}
+			{#each chars as c}
 				<tr>
-					<td>{character.name}</td>
-					<td>{character.realm}</td>
-					<td class={slugify(character.cls)}
-						><img src={icon(character)} alt="" class="icon" />{character.cls}</td
-					>
-					<td>{character.race}</td>
-					<td>{character.level}</td>
-					<td>{character.gender}</td>
-					<td>{character.faction}</td>
-					<td>{character.spec}</td>
-					<td>{character.guild}</td>
+					<td><img src={c.media?.avatar} alt="" class="icon" />{c.name}</td>
+					<td>{c.realm}</td>
+					<td class={slugify(c.cls)}><img src={icon(c)} alt="" class="icon" />{c.cls}</td>
+					<td>{c.race}</td>
+					<td>{c.level}</td>
+					<td>{c.gender}</td>
+					<td>{c.faction}</td>
+					<td>{c.spec}</td>
+					<td>{c.guild}</td>
 				</tr>
 			{/each}
 		</tbody>
@@ -61,21 +61,4 @@
 
 <style>
 	@import './style.css';
-
-	table {
-		color: white;
-		background-color: black;
-	}
-	thead {
-		color: goldenrod;
-	}
-	img.icon {
-		width: 16px;
-		height: 16px;
-		display: inline-block;
-		margin-right: 2px;
-	}
-	td {
-		padding: 1px 5px;
-	}
 </style>

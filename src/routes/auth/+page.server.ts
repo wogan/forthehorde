@@ -2,14 +2,15 @@ import { redirect, type RequestHandler } from '@sveltejs/kit';
 import { redirectUrl, authorize } from '$lib/blizzard/oauth';
 import { randomString } from '$lib/random';
 
-export const GET: RequestHandler = async ({ url: { searchParams: params }, cookies }) => {
+export const load = async ({ url: { searchParams: params }, cookies }) => {
     // TODO we can also get redirected back here if the user cancels the flow - how to handle?
     if (params.has('code') && params.has('state')) {
         let state = cookies.get('oauthstate') ?? ''
         let returnedState = params.get('state') ?? ''
         if (state == '' || state !== returnedState) {
-            // TODO how to show error message?
-            return redirect(302, '/')
+            return {
+                'error': 'State parameter missing or invalid'
+            }
         }
         let token = await authorize(params.get('code') ?? '')
         // TODO save to Database etc?

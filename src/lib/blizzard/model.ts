@@ -1,4 +1,3 @@
-
 export type Locale = 'en_US' | 'es_MX' | 'pt_BR' | 'de_DE' |
     'en_GB' | 'es_ES' | 'fr_FR' | 'it_IT' |
     'ru_RU' | 'ko_KR' | 'zh_TW' | 'zh_CN'
@@ -47,8 +46,8 @@ export interface SpellTooltip {
     cooldown?: string
 }
 
-export interface Asset {
-    key: string
+export interface Asset<K extends string> {
+    key: K
     value: string // url
     file_data_id: number
 }

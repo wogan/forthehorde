@@ -1,6 +1,8 @@
 <script>
 	import '../app.css';
-	let { children } = $props();
+	const { children, data } = $props();
+	const username = data?.username;
+	const loggedin = !!data?.username;
 </script>
 
 <svelte:head>
@@ -11,7 +13,9 @@
 
 <nav>
 	<a href="/">Home</a>
+	{#if loggedin}<a href="/warband">Warband</a>{/if}
 	<a href="/about">About</a>
+	{#if loggedin}<a href="/logout">Logout</a>{/if}
 </nav>
 
 {@render children()}

@@ -1,4 +1,4 @@
-import type { Link, Entity, ApiResponse, Asset, GenderString } from "../model"
+import type { Link, Entity, ApiResponse, Asset, GenderString, Refine } from "../model"
 
 export interface PlayableClassesIndex extends ApiResponse {
     classes: Entity[]
@@ -19,11 +19,9 @@ export interface PlayableClass extends ApiResponse {
     additional_power_types?: Entity[]
 }
 
-
-
 export interface PlayableClassMedia extends ApiResponse {
     id: number
-    assets: Asset[]
+    assets: Asset<'icon'>[]
 }
 
 export interface PvpTalentSlots extends ApiResponse {

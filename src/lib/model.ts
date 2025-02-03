@@ -1,16 +1,21 @@
 import type { Character as BlizzardCharacter } from "./blizzard/wow/profile";
 
 export interface Character {
-    name: string;
-    realm: string;
-    cls: string;
-    race: string;
-    level: number;
-    gender: string;
-    faction: string;
-    account: number;
-    spec?: string;
-    guild?: string;
+    name: string
+    realm: string
+    cls: string
+    race: string
+    level: number
+    gender: string
+    faction: string
+    account: number
+    spec?: string
+    guild?: string
+    media?: {
+        main: string
+        inset: string
+        avatar: string
+    }
 }
 
 export function Character(c: BlizzardCharacter, account: number): Character {
