@@ -31,10 +31,19 @@ export interface GenderString {
     female: string
 }
 
-export interface ApiResponse {
+export interface ApiResponse<Links extends string = 'self'> {
     _links: {
-        self: Link
+        [link in Links]: Link
     }
+}
+
+export type ApiIndex<T extends string, E = Entity> = ApiResponse & {
+    [key in T]: E[]
+}
+
+export type Media<T extends string> = ApiResponse & {
+    id: number
+    assets: Asset<T>[]
 }
 
 export interface SpellTooltip {
@@ -51,3 +60,5 @@ export interface Asset<K extends string> {
     value: string // url
     file_data_id: number
 }
+
+export type Faction = DefinedType<'HORDE' | 'ALLIANCE'>

@@ -1,11 +1,6 @@
-import type { Link, Entity, EntityWithSlug, ApiResponse, SpellTooltip, DefinedType, Asset } from "../model"
+import type { Link, Entity, EntityWithSlug, ApiResponse, SpellTooltip, DefinedType, Asset, Faction } from "../model"
 
-export interface Profile extends ApiResponse {
-    _links: {
-        self: Link
-        user: Link
-        profile: Link
-    }
+export interface Profile extends ApiResponse<'self' | 'user' | 'profile'> {
     id: number
     wow_accounts: WowAccount[]
     collections: Link
@@ -17,8 +12,6 @@ export interface WowAccount {
 }
 
 export type Gender = DefinedType<'MALE' | 'FEMALE'>
-
-export type Faction = DefinedType<'HORDE' | 'ALLIANCE'>
 
 export interface Character {
     character: Link,
@@ -49,9 +42,9 @@ export interface CharacterProfile extends ApiResponse {
     faction: Faction
     race: Entity
     character_class: Entity
-    active_spec?: Entity | null
+    active_spec?: Entity
     realm: EntityWithSlug
-    guild?: Guild | null
+    guild?: Guild
     level: number
     experience: number
     achievement_points: number
@@ -82,25 +75,20 @@ export interface CharacterProfile extends ApiResponse {
     name_search: string
 }
 
-export interface CharacterProfileProtected extends ApiResponse {
-    _links: {
-        self: Link
-        user: Link
-        profile: Link
-    }
+export interface CharacterProfileProtected extends ApiResponse<'self' | 'user' | 'profile'> {
     id: number
     name: string
     money: number
     character: CharacterRef
     protected_stats: {
         total_number_deaths: number
-        total_gold_gained: 1664644810
-        total_gold_lost: 1585296225
-        total_item_value_gained: 339826078
-        level_number_deaths: 13
-        level_gold_gained: 910109970
-        level_gold_lost: 1096460132
-        level_item_value_gained: 146190446
+        total_gold_gained: number
+        total_gold_lost: number
+        total_item_value_gained: number
+        level_number_deaths: number
+        level_gold_gained: number
+        level_gold_lost: number
+        level_item_value_gained: number
     }
     position: Position
     bind_position: Position

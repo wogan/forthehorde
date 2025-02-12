@@ -1,6 +1,6 @@
 import { wow } from 'blizzard.js'
 import { slugify } from '../src/lib/model'
-import type { PlayableClassMedia, PlayableClassesIndex } from '../src/lib/blizzard/wow/playable_class'
+import type { PlayableClassMedia, PlayableClassIndex } from '../src/lib/blizzard/wow/playable_class'
 
 const CLIENT_ID = process.env.BATTLE_NET_CLIENT_ID
 const CLIENT_SECRET = process.env.BATTLE_NET_CLIENT_SECRET;
@@ -26,7 +26,7 @@ interface ClassData {
 
 async function callApi() {
     try {
-        const response = await wowClient.playableClass<PlayableClassesIndex>();
+        const response = await wowClient.playableClass<PlayableClassIndex>();
         const result: Record<string, string> = {}
         for (let cls of response.data.classes) {
             const media = await wowClient.playableClass<PlayableClassMedia>({ id: cls.id, media: true })

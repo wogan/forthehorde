@@ -1,9 +1,7 @@
-import type { ApiResponse, Asset, DefinedType, Entity, GenderString, SpellTooltip } from "../model"
+import type { ApiIndex, ApiResponse, Asset, DefinedType, Entity, GenderString, Media, SpellTooltip } from "../model"
 
-export interface PlayableSpecializationIndex extends ApiResponse {
-    character_specializations: Entity[]
-    pet_specializations: Entity[]
-}
+export type PlayableSpecializationIndex = ApiIndex<'character_specializations' | 'pet_specializations'>
+export type PlayableSpecializationMedia = Media<'icon'>
 
 export interface PlayableSpecialization extends ApiResponse {
     id: number
@@ -22,7 +20,3 @@ export interface PlayableSpecialization extends ApiResponse {
     hero_talent_trees: Entity[]
 }
 
-export interface PlayableSpecializationMedia extends ApiResponse {
-    assets: Asset<'icon'>[]
-    id: number
-}

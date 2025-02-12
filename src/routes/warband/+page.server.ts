@@ -22,6 +22,7 @@ export const load = async ({ cookies }) => {
     let characters: Character[] = []
     let accounts = []
     try {
+        await api.checkAuth()
         let profile = (await api.profile(token));
         for (let account of profile.wow_accounts) {
             let cx = account.characters.map(async (c) => {

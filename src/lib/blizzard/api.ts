@@ -5,6 +5,8 @@ import type { Character, CharacterMedia, CharacterProfile, Profile } from './wow
 import type { ResourceResponse } from 'blizzard.js/dist/resources'
 import pRetry from 'p-retry'
 import { isAxiosError } from 'axios'
+import type { WoW } from 'blizzard.js/dist/wow/client'
+import type { Title, TitleIndex } from './wow/title'
 
 const limiter = new RateLimiterMemory({
     points: 100,
@@ -17,8 +19,6 @@ const wowClient = await wow.createInstance({
     origin: 'us',
     locale: 'en_US',
 }, false)
-
-await wowClient.refreshApplicationToken();
 
 async function run<T>(request: () => ResourceResponse<T>): Promise<T> {
     return await pRetry(async () => {
@@ -36,6 +36,21 @@ async function run<T>(request: () => ResourceResponse<T>): Promise<T> {
     })
 }
 
+async function checkAuth() {
+    try {
+        const currentToken = (wowClient as WoW).defaults.token
+        if (typeof currentToken === 'undefined') {
+            await wowClient.refreshApplicationToken()
+        } else {
+            await wowClient.validateApplicationToken()
+        }
+    } catch (e) {
+        if (isAxiosError(e) && e.status === 401) {
+            await wowClient.refreshApplicationToken();
+        }
+    }
+}
+
 const profile = async (token: string): Promise<Profile> => {
     return run(() => wowClient.accountProfile<Profile>({ token }))
 }
@@ -44,7 +59,6 @@ const characterProfile = async (char: Character): Promise<CharacterProfile> => {
     return run(() => wowClient.characterProfile<CharacterProfile>({
         name: char.name.toLowerCase(),
         realm: char.realm.slug,
-        locale: 'en_US'
     }))
 }
 
@@ -52,14 +66,18 @@ const characterMedia = async (char: Character): Promise<CharacterMedia> => {
     return run(() => wowClient.characterMedia<CharacterMedia>({
         name: char.name.toLowerCase(),
         realm: char.realm.slug,
-        locale: 'en_US'
     }))
 }
 
 export const api = {
+    checkAuth,
     profile,
     character: {
         profile: characterProfile,
         media: characterMedia
+    },
+    titles: {
+        index: () => run(() => wowClient.title<TitleIndex>()),
+        title: (id: number) => run(() => wowClient.title<Title>({ id }))
     }
 } as const
