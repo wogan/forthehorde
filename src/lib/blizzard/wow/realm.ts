@@ -1,11 +1,9 @@
-import type { ApiIndex, ApiResponse, DefinedType, Entity, EntityWithSlug, Link } from "../model";
+import type { ApiEntityResponse, ApiIndex, DefinedType, Entity, EntityWithSlug, Link } from "../model";
 
 export type RealmIndex = ApiIndex<'realms', EntityWithSlug>
 export type RegionIndex = ApiIndex<'regions', Link>
 
-export interface Realm extends ApiResponse {
-    id: number
-    name: string
+export interface Realm extends ApiEntityResponse {
     slug: string
     region: Entity
     connected_realm: Link
@@ -16,9 +14,7 @@ export interface Realm extends ApiResponse {
     is_tournament: boolean
 }
 
-export interface Region extends ApiResponse {
-    id: number
-    name: string
+export interface Region extends ApiEntityResponse {
     tag: string
     patch_string: string
 }

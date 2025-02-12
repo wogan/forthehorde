@@ -1,4 +1,4 @@
-import type { Link, Entity, EntityWithSlug, ApiResponse, SpellTooltip, DefinedType, Asset, Faction } from "../model"
+import type { Link, Entity, EntityWithSlug, ApiResponse, SpellTooltip, DefinedType, Asset, Faction, ApiEntityResponse } from "../model"
 
 export interface Profile extends ApiResponse<'self' | 'user' | 'profile'> {
     id: number
@@ -35,9 +35,7 @@ export interface Guild extends Entity {
     faction: Faction
 }
 
-export interface CharacterProfile extends ApiResponse {
-    id: number
-    name: string
+export interface CharacterProfile extends ApiEntityResponse {
     gender: Gender
     faction: Faction
     race: Entity

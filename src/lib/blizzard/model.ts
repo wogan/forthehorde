@@ -2,11 +2,6 @@ export type Locale = 'en_US' | 'es_MX' | 'pt_BR' | 'de_DE' |
     'en_GB' | 'es_ES' | 'fr_FR' | 'it_IT' |
     'ru_RU' | 'ko_KR' | 'zh_TW' | 'zh_CN'
 
-export type Localized = 'Localized'
-export type AllLocales = 'AllLocales'
-export type ApiVariation = Localized | AllLocales
-export type LocalizedString<T extends ApiVariation> = T extends Localized ? string : Record<Locale, string>
-
 export interface Link {
     href: string
 }
@@ -39,6 +34,11 @@ export interface ApiResponse<Links extends string = 'self'> {
 
 export type ApiIndex<T extends string, E = Entity> = ApiResponse & {
     [key in T]: E[]
+}
+
+export interface ApiEntityResponse extends ApiResponse {
+    id: number
+    name :string
 }
 
 export type Media<T extends string> = ApiResponse & {

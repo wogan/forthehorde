@@ -1,10 +1,8 @@
-import type { ApiIndex, ApiResponse, DefinedType, Entity, GenderString } from "../model";
+import type { ApiEntityResponse, ApiIndex, DefinedType, Entity, GenderString } from "../model";
 
 export type TitleIndex = ApiIndex<'titles'>
 
-export interface Title extends ApiResponse {
-    id: number
-    name: string
+export interface Title extends ApiEntityResponse {
     // gender_name includes the {name} template
     gender_name: GenderString
     source?: Source

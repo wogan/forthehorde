@@ -1,12 +1,10 @@
-import type { ApiIndex, ApiResponse, Asset, DefinedType, Entity, Link, Media } from "../model";
+import type { ApiEntityResponse, ApiIndex, ApiResponse, Asset, DefinedType, Entity, Link, Media } from "../model";
 
 export type ProfessionIndex = ApiIndex<'professions'>
 export type ProfessionMedia = Media<'icon'>
 export type RecipeMedia = Media<'icon'>
 
-export interface Profession extends ApiResponse {
-    id: number
-    name: string
+export interface Profession extends ApiEntityResponse {
     description: string
     type: DefinedType<'PRIMARY' | 'SECONDARY'>
     media: Omit<Entity, 'name'>
@@ -15,9 +13,7 @@ export interface Profession extends ApiResponse {
     maximum_skill_level?: number
 }
 
-export interface ProfessionSkillTier extends ApiResponse {
-    id: number
-    name: string
+export interface ProfessionSkillTier extends ApiEntityResponse {
     minimum_skill_level: number
     maximum_skill_level: number
     categories: {
@@ -26,9 +22,7 @@ export interface ProfessionSkillTier extends ApiResponse {
     }[]
 }
 
-export interface Recipe extends ApiResponse {
-    id: number
-    name: string
+export interface Recipe extends ApiEntityResponse {
     media: Omit<Entity, 'name'>
     crafted_item?: Entity
     reagents?: {
@@ -43,11 +37,4 @@ export interface Recipe extends ApiResponse {
         slot_type: Entity
         display_order: number
     }
-}
-
-type Quantity = {
-    value: number
-} | {
-    min: number
-    max: number
 }

@@ -1,10 +1,8 @@
-import type { ApiIndex, ApiResponse, Entity, Faction, GenderString } from "../model";
+import type { ApiEntityResponse, ApiIndex, Entity, Faction, GenderString } from "../model";
 
 export type PlayableRaceIndex = ApiIndex<'races'>
 
-export interface PlayableRace extends ApiResponse {
-    id: number
-    name: string
+export interface PlayableRace extends ApiEntityResponse {
     gender_name: GenderString
     faction: Faction
     is_selectable: boolean
