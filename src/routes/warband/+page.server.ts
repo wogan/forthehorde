@@ -1,9 +1,9 @@
 import { Character } from "$lib/model";
-import type { CharacterMedia, CharacterAsset } from '$lib/blizzard/wow/profile.js';
 import { isAxiosError } from 'axios'
 import { api } from '$lib/blizzard/api.js';
+import type { CharacterAsset, CharacterMedia } from "$lib/blizzard/wow/profile";
 
-function transformMedia(media: CharacterMedia): Character['media'] {
+function transformMedia(media: CharacterMedia): Awaited<Character['media']> {
     const f = (s: CharacterAsset) => media.assets.find(a => a.key === s)?.value!!
     return {
         main: f('main-raw'),
@@ -25,24 +25,13 @@ export const load = async ({ cookies }) => {
         await api.checkAuth()
         let profile = (await api.profile(token));
         for (let account of profile.wow_accounts) {
-            let cx = account.characters.map(async (c) => {
-                let char = Character(c, account.id)
-                try {
-                    let extra = api.character.profile(c)
-                    let media = api.character.media(c)
-                    const [e, m] = await Promise.all([extra, media])
-                    char.guild = e.guild?.name
-                    char.spec = e.active_spec?.name
-                    char.media = transformMedia(m)
-                } catch (e) {
-                    if (isAxiosError(e) && ![404].includes(e.status!!)) {
-                        console.log(`Got ${e.status} for ${e.request.path}`)
-                    }
-                }
-                return char
-            })
-            let values = await Promise.all(cx)
-            characters.push(...values)
+            let cx = account.characters.map(c => Character(
+                c,
+                account.id,
+                api.character.profile(c).then(p => ({ guild: p.guild?.name, spec: p.active_spec?.name })).catch(e => ({})),
+                api.character.media(c).then(transformMedia).catch(e => ({ main: '', inset: '', avatar: '' })) // todo construct default urls
+            ))
+            characters.push(...cx)
             accounts.push({
                 id: account.id
             })

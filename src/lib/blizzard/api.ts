@@ -1,6 +1,6 @@
 import { wow } from 'blizzard.js'
 import { BATTLE_NET_CLIENT_ID, BATTLE_NET_CLIENT_SECRET } from '$env/static/private'
-import { RateLimiterMemory } from 'rate-limiter-flexible'
+import { RateLimiterMemory, RateLimiterRes } from 'rate-limiter-flexible'
 import type { Character, CharacterMedia, CharacterProfile, Profile } from './wow/profile'
 import type { ResourceResponse } from 'blizzard.js/dist/resources'
 import pRetry from 'p-retry'
@@ -20,9 +20,19 @@ const wowClient = await wow.createInstance({
     locale: 'en_US',
 }, false)
 
+class RateLimited extends Error {
+    rate_limited: boolean = true
+}
+
 async function run<T>(request: () => ResourceResponse<T>): Promise<T> {
     return await pRetry(async () => {
-        await limiter.consume('key', 1)
+        try {
+            await limiter.consume('key', 1)
+        } catch (e) {
+            if (e instanceof RateLimiterRes) {
+                throw new RateLimited("rate limited");
+            }
+        }
         const response = await (request())
         return response.data
     }, {
@@ -32,7 +42,7 @@ async function run<T>(request: () => ResourceResponse<T>): Promise<T> {
                 await wowClient.refreshApplicationToken()
             }
         },
-        shouldRetry: e => isAxiosError(e) && [401, 429].includes(e.status!!)
+        shouldRetry: e => e instanceof RateLimited || (isAxiosError(e) && [401, 429].includes(e.status!!))
     })
 }
 

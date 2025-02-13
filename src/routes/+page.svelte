@@ -8,7 +8,7 @@
 {#if !!username}
 	<p>Welcome back {username}</p>
 	<!-- get list of characters, sort by level desc, last login desc and take top 4 -->
-	<p>View your <a href="/warband">warband</a></p>
+	<p>View your <a href="/warband" data-sveltekit-preload-data={false}>warband</a></p>
 {:else}
 	<p>Track all of your WoW characters in one place.</p>
 	{#if !redirecting}

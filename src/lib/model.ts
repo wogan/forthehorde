@@ -1,5 +1,13 @@
 import type { Character as BlizzardCharacter } from "./blizzard/wow/profile";
 
+type Media = {
+    main: string
+    inset: string
+    avatar: string
+}
+
+type Extra = { spec?: string, guild?: string }
+
 export interface Character {
     name: string
     realm: string
@@ -9,16 +17,11 @@ export interface Character {
     gender: string
     faction: string
     account: number
-    spec?: string
-    guild?: string
-    media?: {
-        main: string
-        inset: string
-        avatar: string
-    }
+    extra: Promise<Extra>
+    media: Promise<Media>
 }
 
-export function Character(c: BlizzardCharacter, account: number): Character {
+export function Character(c: BlizzardCharacter, account: number, extra: Promise<Extra>, media: Promise<Media>): Character {
     return {
         name: c.name,
         realm: c.realm.name,
@@ -27,7 +30,9 @@ export function Character(c: BlizzardCharacter, account: number): Character {
         level: c.level,
         gender: c.gender.name,
         faction: c.faction.name,
-        account
+        account,
+        extra,
+        media
     }
 }
 

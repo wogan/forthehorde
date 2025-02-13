@@ -13,7 +13,7 @@
 
 <nav>
 	<a href="/">Home</a>
-	{#if loggedin}<a href="/warband">Warband</a>{/if}
+	{#if loggedin}<a href="/warband" data-sveltekit-preload-data={false}>Warband</a>{/if}
 	<a href="/about">About</a>
 	{#if loggedin}<a href="/logout">Logout</a>{/if}
 </nav>
