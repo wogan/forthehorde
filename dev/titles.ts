@@ -5,6 +5,11 @@ import type { ResourceResponse } from 'blizzard.js/dist/resources'
 import pRetry from 'p-retry'
 import { isAxiosError } from 'axios'
 
+/*
+Mostly just a proof of concept script to be able to use lib scrips
+*/
+
+
 const CLIENT_ID = process.env.BATTLE_NET_CLIENT_ID
 const CLIENT_SECRET = process.env.BATTLE_NET_CLIENT_SECRET;
 

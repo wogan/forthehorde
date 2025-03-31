@@ -1,4 +1,4 @@
-import type { ApiEntityResponse, ApiIndex, ApiResponse, Asset, DefinedType, Entity, Link, Media } from "../model";
+import type { ApiEntityResponse, ApiIndex, DefinedType, Entity, Media } from "../model";
 
 export type ProfessionIndex = ApiIndex<'professions'>
 export type ProfessionMedia = Media<'icon'>

@@ -1,12 +1,12 @@
 import { wow } from 'blizzard.js'
 import { BATTLE_NET_CLIENT_ID, BATTLE_NET_CLIENT_SECRET } from '$env/static/private'
 import { RateLimiterMemory, RateLimiterRes } from 'rate-limiter-flexible'
-import type { Character, CharacterMedia, CharacterProfile, Profile } from './wow/profile'
-import type { ResourceResponse } from 'blizzard.js/dist/resources'
 import pRetry from 'p-retry'
 import { isAxiosError } from 'axios'
+import type { ResourceResponse } from 'blizzard.js/dist/resources'
 import type { WoW } from 'blizzard.js/dist/wow/client'
 import type { Title, TitleIndex } from './wow/title'
+import type { Character, CharacterMedia, CharacterProfile, Profile, PlayableClassIndex, PlayableClass, PlayableClassMedia, PlayableRace, PlayableRaceIndex, PlayableSpecializationIndex, PlayableSpecialization, PlayableSpecializationMedia, PowerTypeIndex, PowerType, RealmIndex, Realm, RegionIndex, Region, CharacterProfileProtected, CharacterSpecialization } from './wow'
 
 const limiter = new RateLimiterMemory({
     points: 100,
@@ -61,33 +61,49 @@ async function checkAuth() {
     }
 }
 
-const profile = async (token: string): Promise<Profile> => {
-    return run(() => wowClient.accountProfile<Profile>({ token }))
-}
-
-const characterProfile = async (char: Character): Promise<CharacterProfile> => {
-    return run(() => wowClient.characterProfile<CharacterProfile>({
-        name: char.name.toLowerCase(),
-        realm: char.realm.slug,
-    }))
-}
-
-const characterMedia = async (char: Character): Promise<CharacterMedia> => {
-    return run(() => wowClient.characterMedia<CharacterMedia>({
-        name: char.name.toLowerCase(),
-        realm: char.realm.slug,
-    }))
-}
+const charToNameRealm = (char: Character) => ({
+    name: char.name.toLowerCase(),
+    realm: char.realm.slug,
+})
 
 export const api = {
     checkAuth,
-    profile,
+    profile: (token: string) => run(() => wowClient.accountProfile<Profile>({ token })),
     character: {
-        profile: characterProfile,
-        media: characterMedia
+        profile: (char: Character) => run(() => wowClient.characterProfile<CharacterProfile>(charToNameRealm(char))),
+        protected: (char: Character, token: string) => run(() => wowClient.accountCharacterProfile<CharacterProfileProtected>({ character: char.id, realm: char.realm.id, token })),
+        media: (char: Character) => run(() => wowClient.characterMedia<CharacterMedia>(charToNameRealm(char))),
+        spec: (char: Character) => run(() => wowClient.characterSpecializations<CharacterSpecialization>(charToNameRealm(char)))
     },
-    titles: {
+    title: {
         index: () => run(() => wowClient.title<TitleIndex>()),
-        title: (id: number) => run(() => wowClient.title<Title>({ id }))
+        detail: (id: number) => run(() => wowClient.title<Title>({ id }))
+    },
+    class: {
+        index: () => run(() => wowClient.playableClass<PlayableClassIndex>()),
+        detail: (id: number) => run(() => wowClient.playableClass<PlayableClass>({ id })),
+        media: (id: number) => run(() => wowClient.playableClass<PlayableClassMedia>({ id, media: true })),
+    },
+    race: {
+        index: () => run(() => wowClient.playableRace<PlayableRaceIndex>()),
+        detail: (id: number) => run(() => wowClient.playableRace<PlayableRace>({ id }))
+    },
+    spec: {
+        index: () => run(() => wowClient.playableSpecialization<PlayableSpecializationIndex>()),
+        detail: (id: number) => run(() => wowClient.playableSpecialization<PlayableSpecialization>({ id })),
+        media: (id: number) => run(() => wowClient.playableSpecialization<PlayableSpecializationMedia>({ id, media: true })),
+    },
+    power: {
+        index: () => run(() => wowClient.powerType<PowerTypeIndex>()),
+        detail: (id: number) => run(() => wowClient.playableRace<PowerType>({ id }))
+    },
+    realm: {
+        index: () => run(() => wowClient.realm<RealmIndex>()),
+        detail: (slug: string) => wowClient.realm<Realm>({ slug })
+    },
+    region: {
+        index: () => run(() => wowClient.region<RegionIndex>()),
+        detail: (id: number) => wowClient.region<Region>({ id })
     }
+
 } as const

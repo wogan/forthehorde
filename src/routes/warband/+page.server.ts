@@ -1,7 +1,10 @@
 import { Character } from "$lib/model";
 import { isAxiosError } from 'axios'
 import { api } from '$lib/blizzard/api.js';
-import type { CharacterAsset, CharacterMedia } from "$lib/blizzard/wow/profile";
+import type { CharacterAsset, CharacterMedia, Profile } from "$lib/blizzard/wow/profile";
+import { syncAccount } from "$lib/trigger/sync";
+import { ApiError, configure } from "@trigger.dev/sdk/v3";
+import { TRIGGER_SECRET_KEY } from "$env/static/private";
 
 function transformMedia(media: CharacterMedia): Awaited<Character['media']> {
     const f = (s: CharacterAsset) => media.assets.find(a => a.key === s)?.value!!
@@ -9,6 +12,22 @@ function transformMedia(media: CharacterMedia): Awaited<Character['media']> {
         main: f('main-raw'),
         avatar: f('avatar'),
         inset: f('inset')
+    }
+}
+
+// TODO do this during build? sveltekit plugin?
+configure({
+    secretKey: TRIGGER_SECRET_KEY,
+})
+
+async function triggerAccountSync(token: string, profile: Profile): Promise<void> {
+    try {
+        let job = await syncAccount.trigger({ token, account_id: profile.id })
+        console.log('Started sync job for account %d, task id %s', profile.id, job.id)
+    } catch (e) {
+        if (e instanceof ApiError) {
+            console.error(e.name)
+        }
     }
 }
 
@@ -24,6 +43,8 @@ export const load = async ({ cookies }) => {
     try {
         await api.checkAuth()
         let profile = (await api.profile(token));
+        // triggerAccountSync(token, profile);
+        // return runId as page data -> effect on the page to connect to stream endpoint
         for (let account of profile.wow_accounts) {
             let cx = account.characters.map(c => Character(
                 c,

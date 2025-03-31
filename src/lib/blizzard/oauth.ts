@@ -6,7 +6,7 @@ const redirect_uri = `${scheme}${VERCEL_PROJECT_PRODUCTION_URL}/auth`
 
 export interface Token {
     access_token: string
-    token_type: "bearer"
+    token_type: 'bearer'
     expires_in: number
     scope: string
     id_token?: string
@@ -33,7 +33,7 @@ export async function accessToken(): Promise<Token> {
 }
 
 export async function checkToken(token: string): Promise<boolean> {
-    const body = new FormData
+    const body = new FormData()
     body.append('token', token)
     const request = new Request('https://oauth.battle.net/oauth/check_token', { method: 'post', body })
     return (await fetch(request)).ok
@@ -49,7 +49,7 @@ interface AuthorizationCode {
 }
 
 async function token(method: ClientCredentials | AuthorizationCode): Promise<Token> {
-    const body = new FormData;
+    const body = new FormData()
     body.append('grant_type', method.grant_type)
     if (method.grant_type == 'authorization_code') {
         body.append('redirect_uri', redirect_uri)

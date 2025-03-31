@@ -1,12 +1,11 @@
 
 CREATE TABLE user (
     id bigint not null primary key, -- battle net id
-    name TEXT NOT NULL UNIQUE,
-    battle_tag text NOT NULL,
+    name text not null unique,
+    battle_tag text not null,
     locale text not null,
-    token varchar(64) not null,
-    created_at timestamp not null,
-    token_expires_at timestamp not null
+    created timestamp not null,
+    last_login timestamp not null
 );
 
 create table guild (
@@ -17,7 +16,6 @@ create table guild (
     achievement_points int not null,
     crest_emblem_id int null,
     crest_emblem_color color null,
-
 )
 
 create table character ( -- /profile/user/wow
@@ -31,8 +29,7 @@ create table character ( -- /profile/user/wow
     faction text not null,
     level int not null,
 
-    last_modified timestamp not null, -- from blizzard response headers
-    updated_at timestamp not null
+    last_modified timestamp not null -- from blizzard response headers
 );
 
 create table character_extended ( --
@@ -44,9 +41,9 @@ create table character_extended ( --
     achievement_points int not null,
     item_level int not null, -- equipped item level
     title text null,
-    last_login timestamp not null,
+    last_login timestamp not null
 
-    updated_at timestamp not null
+    last_modified timestamp not null -- from blizzard response headers
 );
 
 create table character_protected ( -- /profile/user/wow/protected-character/{realmId}-{characterId}
@@ -59,8 +56,7 @@ create table character_protected ( -- /profile/user/wow/protected-character/{rea
     hearth_map text not null,
 
 
-    last_modified timestamp not null, -- from blizzard response headers
-    updated_at timestamp not null,
+    last_modified timestamp not null -- from blizzard response headers
 );
 
 create table character_media ( -- /profile/wow/character/{realmSlug}/{characterName}/character-media
@@ -70,7 +66,6 @@ create table character_media ( -- /profile/wow/character/{realmSlug}/{characterN
     main_raw text not null,
 
     last_modified timestamp not null, -- from blizzard response headers
-    updated_at timestamp not null,
 );
 
 create table character_professions ( -- /profile/wow/character/{realmSlug}/{characterName}/professions
@@ -86,6 +81,4 @@ create table character_professions ( -- /profile/wow/character/{realmSlug}/{char
 
 
     last_modified timestamp not null, -- from blizzard response headers
-    updated_at timestamp not null,
-
 )

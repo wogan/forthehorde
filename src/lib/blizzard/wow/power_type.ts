@@ -1,4 +1,4 @@
-import type { ApiEntityResponse, ApiIndex, ApiResponse } from "../model";
+import type { ApiEntityResponse, ApiIndex } from "../model";
 
 export type PowerTypeIndex = ApiIndex<'power_types'>
 

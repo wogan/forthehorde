@@ -24,3 +24,5 @@ vite.config.ts.timestamp-*
 
 # Vercel chokes on package-lock.json generated locally
 /package-lock.json
+
+.trigger

@@ -2,6 +2,16 @@ import { wow } from 'blizzard.js'
 import { slugify } from '../src/lib/model'
 import type { PlayableClassMedia, PlayableClassIndex } from '../src/lib/blizzard/wow/playable_class'
 
+/*
+At the moment this script just gets the official icon url for each class and prints the result
+as a JSON document - slugifying the `name` to use as the key.
+
+In the future, we should actually download the icons and save it to the `static` folder.
+In addition, we should download the blizzard class names (`gender_name`) and save to our l10n
+bundle for each supported locale.
+*/
+
+
 const CLIENT_ID = process.env.BATTLE_NET_CLIENT_ID
 const CLIENT_SECRET = process.env.BATTLE_NET_CLIENT_SECRET;
 
