@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Character, slugify } from '$lib/model';
-	import classIcons from '$lib/data/classes.json';
+	import { Character, slugify } from '#lib/model.ts';
+	import classIcons from '#lib/data/classes.json';
 	import Media from './media.svelte';
 
 	const icon = (c: Character): string | null => {
@@ -44,7 +44,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each chars as c}
+			{#each chars as c (`${c.account}:${c.realm}:${c.name}`)}
 				<tr>
 					<td>
 						{#await c.media then media}

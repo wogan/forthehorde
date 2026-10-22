@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import type { Character } from '$lib/model';
+	import { browser } from '$app/env';
+	import type { Character } from '#lib/model.ts';
 
 	let { characters }: { characters: Character[] } = $props();
 
@@ -17,12 +17,12 @@
 	}
 
 	const loadImage = (url: string): Promise<HTMLImageElement> => {
-			return new Promise<HTMLImageElement>((resolve, reject) => {
-				const img = new Image();
-				img.onload = () => resolve(img);
-				img.onerror = () => reject(new Error(`load ${url} fail`));
-				img.src = url;
-			});
+		return new Promise<HTMLImageElement>((resolve, reject) => {
+			const img = new Image();
+			img.onload = () => resolve(img);
+			img.onerror = () => reject(new Error(`load ${url} fail`));
+			img.src = url;
+		});
 	};
 
 	$effect(() => {

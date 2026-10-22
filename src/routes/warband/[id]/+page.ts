@@ -1,6 +1,7 @@
+import type { PageLoad } from './$types';
 
-export const load = ({ params }) => {
-    return {
-        slug: params.id
-    }
-}
+export const load: PageLoad = ({ params }) => {
+	return {
+		slug: params.id
+	};
+};
