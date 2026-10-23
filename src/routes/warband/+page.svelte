@@ -8,7 +8,7 @@
 		return (classIcons as Record<string, string>)[slug];
 	};
 
-	const MAX_LEVEL = 80;
+	const MAX_LEVEL = 90;
 
 	let { data } = $props();
 
@@ -44,7 +44,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each chars as c (`${c.account}:${c.realm}:${c.name}`)}
+			{#each chars as c (c.id)}
 				<tr>
 					<td>
 						{#await c.media then media}

@@ -1,14 +1,15 @@
 import type { Character as BlizzardCharacter } from './blizzard/wow/profile';
 
 type Media = {
-	main: string;
-	inset: string;
-	avatar: string;
+	main?: string;
+	inset?: string;
+	avatar?: string;
 };
 
 type Extra = { spec?: string; guild?: string };
 
 export interface Character {
+	id: number;
 	name: string;
 	realm: string;
 	cls: string;
@@ -28,6 +29,7 @@ export function Character(
 	media: Promise<Media>
 ): Character {
 	return {
+		id: c.id,
 		name: c.name,
 		realm: c.realm.name,
 		cls: c.playable_class.name,

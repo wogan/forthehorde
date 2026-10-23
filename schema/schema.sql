@@ -1,5 +1,6 @@
+begin;
 
-CREATE TABLE user (
+create table user (
     id bigint not null primary key, -- battle net id
     name text not null unique,
     battle_tag text not null,
@@ -19,7 +20,7 @@ create table guild (
 )
 
 create table character ( -- /profile/user/wow
-    id bigint not null primary key, -- battle net
+    id bigint not null primary key, -- battle net id
     user_id bigint not null references user,
     name text not null,
     realm text not null,
@@ -28,13 +29,11 @@ create table character ( -- /profile/user/wow
     gender text not null,
     faction text not null,
     level int not null,
-
     last_modified timestamp not null -- from blizzard response headers
 );
 
 create table character_extended ( --
     character_id not null primary key references character,
-
     active_spec text null,
     guild text null,
     experience int not null,
@@ -42,7 +41,6 @@ create table character_extended ( --
     item_level int not null, -- equipped item level
     title text null,
     last_login timestamp not null
-
     last_modified timestamp not null -- from blizzard response headers
 );
 
@@ -54,8 +52,6 @@ create table character_protected ( -- /profile/user/wow/protected-character/{rea
     location_map text not null,
     hearth_zone text not null,
     hearth_map text not null,
-
-
     last_modified timestamp not null -- from blizzard response headers
 );
 
@@ -64,7 +60,6 @@ create table character_media ( -- /profile/wow/character/{realmSlug}/{characterN
     avatar text not null,
     inset text not null,
     main_raw text not null,
-
     last_modified timestamp not null, -- from blizzard response headers
 );
 
@@ -72,13 +67,7 @@ create table character_professions ( -- /profile/wow/character/{realmSlug}/{char
     character_id not null primary key references character,
     primary_one text null,
     primary_two text null,
-    archaeology int null, -- no tiers?
-    cooking int null, -- tiers? recipes known?
-    fishing int null, -- tiers?
-
-
-
-
-
     last_modified timestamp not null, -- from blizzard response headers
-)
+);
+
+commit;
