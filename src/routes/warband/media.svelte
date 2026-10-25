@@ -10,8 +10,10 @@
 	if (browser) {
 		characters.forEach((c, i) => {
 			c.media
-				.then((media) => loadImage(media.main))
-				.then((img) => (images[i] = img))
+				.then((media) => (media.main ? loadImage(media.main) : undefined))
+				.then((img) => {
+					if (img) images[i] = img;
+				})
 				.catch(console.log);
 		});
 	}

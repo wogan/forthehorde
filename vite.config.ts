@@ -3,7 +3,6 @@ import adapter from '@sveltejs/adapter-vercel';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import { triggerkit } from 'triggerkit';
 
 export default defineConfig({
 	plugins: [
@@ -14,10 +13,7 @@ export default defineConfig({
 			},
 			preprocess: vitePreprocess()
 		}),
-		tailwindcss(),
-		triggerkit({
-			includeDirs: ['src/lib']
-		})
+		tailwindcss()
 	],
 
 	test: {

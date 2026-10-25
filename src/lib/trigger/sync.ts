@@ -1,4 +1,4 @@
-import { logger, task, wait } from '@trigger.dev/sdk/v3';
+import { logger, queue, task, wait } from '@trigger.dev/sdk';
 
 export interface SyncAccountInput {
 	token: string;
@@ -20,12 +20,15 @@ function validateInput(input: unknown): input is SyncAccountInput {
 	);
 }
 
+const syncQueue = queue({
+	name: 'sync',
+	concurrencyLimit: 1
+});
+
 export const syncAccount = task({
 	id: 'sync-account',
 	maxDuration: 300,
-	queue: {
-		concurrencyLimit: 1
-	},
+	queue: syncQueue,
 	run: async (payload: SyncAccountInput): Promise<SyncAccountOutput> => {
 		if (!validateInput(payload)) {
 			throw Error('invalid input');
