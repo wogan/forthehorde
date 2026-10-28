@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	let { data } = $props();
-	let username = data?.username;
+	let username = $derived(data?.username);
 	let redirecting = $state(false);
 	// TODO: make the redirect flow a bit more interactive/responsive
 </script>

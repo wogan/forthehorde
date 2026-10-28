@@ -1,0 +1,40 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "install",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: install",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "check:watch",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: check:watch",
+			"detail": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		},
+		{
+			"type": "npm",
+			"script": "dev",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: dev",
+			"detail": "vite dev"
+		},
+		{
+			"type": "npm",
+			"script": "check",
+			"problemMatcher": [],
+			"label": "npm: check",
+			"detail": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}

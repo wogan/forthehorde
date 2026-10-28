@@ -7,7 +7,8 @@
 	let canvas: HTMLCanvasElement | undefined = $state();
 	let images = $state<HTMLImageElement[]>([]);
 
-	if (browser) {
+	$effect(() => {
+		if (!browser) return;
 		characters.forEach((c, i) => {
 			c.media
 				.then((media) => (media.main ? loadImage(media.main) : undefined))
@@ -16,7 +17,7 @@
 				})
 				.catch(console.log);
 		});
-	}
+	});
 
 	const loadImage = (url: string): Promise<HTMLImageElement> => {
 		return new Promise<HTMLImageElement>((resolve, reject) => {

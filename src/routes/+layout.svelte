@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import '../app.css';
 	const { children, data } = $props();
-	const loggedin = !!data?.username;
+	const loggedin = $derived(!!data?.username);
 </script>
 
 <svelte:head>
