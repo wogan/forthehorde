@@ -15,6 +15,8 @@
 		"lint": "eslint . && prettier --check .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
+		"pretrigger:dev": "svelte-kit sync",
+		"trigger:dev": "trigger.dev dev",
 		"format": "prettier --write .",
 		"load:classes": "node --experimental-specifier-resolution=node --no-warnings --env-file=.env.local --loader ts-node/esm dev/load_classes.ts",
 		"load:titles": "node --experimental-specifier-resolution=node --no-warnings --env-file=.env.local --loader ts-node/esm dev/titles.ts"
@@ -45,6 +47,7 @@
 		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.7",
 		"tailwindcss": "^4.3.3",
+		"triggerkit": "github:wogan/triggerkit#main",
 		"ts-node": "^10.9.2",
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.72.1",
@@ -52,6 +55,7 @@
 		"vitest": "5.0.5"
 	},
 	"allowScripts": {
-		"fsevents@2.3.3": true
+		"fsevents@2.3.3": true,
+		"esbuild@0.28.2": true
 	}
 }
