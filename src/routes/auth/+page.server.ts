@@ -24,5 +24,5 @@ export const load = async ({ url: { searchParams: params }, cookies }) => {
 	}
 	const state = randomString();
 	cookies.set('oauthstate', state, { path: '/auth', httpOnly: true });
-	return redirect(302, redirectUrl(state));
+	return redirect(302, redirectUrl(state), { external: true });
 };
