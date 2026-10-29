@@ -7,7 +7,8 @@
 		"#lib/*": "./src/lib/*"
 	},
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "concurrently --raw --kill-others npm:dev:*",
+		"dev:app": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -15,8 +16,8 @@
 		"lint": "eslint . && prettier --check .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
-		"pretrigger:dev": "svelte-kit sync",
-		"trigger:dev": "trigger.dev dev",
+		"predev:trigger": "svelte-kit sync",
+		"dev:trigger": "trigger dev",
 		"format": "prettier --write .",
 		"load:classes": "node --experimental-specifier-resolution=node --no-warnings --env-file=.env.local --loader ts-node/esm dev/load_classes.ts",
 		"load:titles": "node --experimental-specifier-resolution=node --no-warnings --env-file=.env.local --loader ts-node/esm dev/titles.ts"
@@ -29,9 +30,10 @@
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@tailwindcss/vite": "^4.3.3",
 		"@trigger.dev/sdk": "4.8.1",
-		"@types/node": "^26.6.5",
+		"@types/node": "^22.6.6",
 		"autoprefixer": "^10.6.2",
 		"blizzard.js": "^5.0.0",
+		"concurrently": "^10.0.6",
 		"cookie": "^2.0.1",
 		"eslint": "^10.13.0",
 		"eslint-config-prettier": "10.1.8",
@@ -47,6 +49,7 @@
 		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.7",
 		"tailwindcss": "^4.3.3",
+		"trigger.dev": "^4.8.1",
 		"triggerkit": "github:wogan/triggerkit#main",
 		"ts-node": "^10.9.2",
 		"typescript": "^6.0.3",
@@ -56,6 +59,6 @@
 	},
 	"allowScripts": {
 		"fsevents@2.3.3": true,
-		"esbuild@0.28.2": true
+		"esbuild": true
 	}
 }

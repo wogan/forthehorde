@@ -6,13 +6,13 @@ World of Warcraft related website
 
 Install dependencies with `npm install`.
 
-Start a development server:
+Start a development server (runs the app and the trigger.dev local worker concurrently):
 
 ```bash
 npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# or start just the app server and open it in a new browser tab
+npm run dev:app -- --open
 ```
 
 Create a production build:
