@@ -54,7 +54,7 @@ Configure these repository secrets under **Settings > Secrets and variables > Ac
 - `VERCEL_TOKEN`: a Vercel access token with deployment access to this project.
 - `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`: the Vercel account/team and project IDs.
 
-Set the production application variables listed above in Vercel, and set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `BATTLE_NET_CLIENT_ID`, and `BATTLE_NET_CLIENT_SECRET` in the Trigger.dev production environment. The Trigger.dev CLI version in the workflow must match the pinned `@trigger.dev/sdk` version.
+Set the production application variables listed above in Vercel, and set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `BATTLE_NET_CLIENT_ID`, and `BATTLE_NET_CLIENT_SECRET` in the Trigger.dev production environment. CI and Trigger.dev use Node 26; configure Vercel to use Node 26 as well. The Trigger.dev CLI version in the workflow must match the pinned `@trigger.dev/sdk` version.
 
 The first run expects a new project without conflicting application tables. Later migrations and task changes must be compatible with the currently deployed application, which remains live during deployment. A Vercel rollback does not revert database migrations or Trigger.dev deployments.
 
