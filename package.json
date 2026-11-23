@@ -33,7 +33,7 @@
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@tailwindcss/vite": "^4.3.3",
 		"@trigger.dev/sdk": "4.8.8",
-		"@types/node": "^22.6.6",
+		"@types/node": "^26.6.6",
 		"autoprefixer": "^10.6.2",
 		"blizzard.js": "^5.0.0",
 		"concurrently": "^10.0.6",
