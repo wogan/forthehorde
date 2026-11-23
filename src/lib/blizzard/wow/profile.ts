@@ -83,6 +83,15 @@ export interface CharacterProfile extends ApiEntityResponse {
 	name_search: string;
 }
 
+export interface CharacterProfessions extends ApiResponse {
+	character: CharacterRef;
+	primaries?: {
+		profession: Entity;
+		skill_points: number;
+		max_skill_points: number;
+	}[];
+}
+
 export interface CharacterProfileProtected extends ApiResponse<'self' | 'user' | 'profile'> {
 	id: number;
 	name: string;

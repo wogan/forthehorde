@@ -17,7 +17,7 @@ export interface Character {
 	level: number;
 	gender: string;
 	faction: string;
-	account: number;
+	account?: number;
 	extra: Promise<Extra>;
 	media: Promise<Media>;
 }

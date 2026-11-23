@@ -1,29 +1,21 @@
 // Data returned from layout load functions is available to child +layout.svelte components
 // and the +page.svelte component as well as the layout that it ‘belongs’ to.
-import { checkToken } from '#lib/blizzard/oauth.ts';
-import { userinfo } from '#lib/blizzard/userinfo.js';
+export const load = async ({ locals }) => {
+	const {
+		data: { session },
+		error: sessionError
+	} = await locals.supabase.auth.getSession();
+	if (sessionError) throw sessionError;
+	if (!session) return {};
 
-function username(battletag: string): string {
-	return battletag.split('#')[0];
-}
+	const {
+		data: { user },
+		error: userError
+	} = await locals.supabase.auth.getUser();
+	if (userError) throw userError;
 
-export const load = async ({ cookies }) => {
-	const token = cookies.get('token');
-	if (!token) {
-		return {};
-	}
-	const check = await checkToken(token);
-	if (!check) {
-		cookies.delete('token', { path: '/' });
-		return {};
-	}
-	try {
-		const data = await userinfo(token);
-		return {
-			username: username(data.battletag)
-		};
-	} catch (e) {
-		console.log(e);
-		return {};
-	}
+	const battletag = user?.user_metadata.battletag;
+	return {
+		username: typeof battletag === 'string' ? battletag.split('#')[0] : undefined
+	};
 };

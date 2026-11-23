@@ -23,7 +23,8 @@ import type {
 	RegionIndex,
 	Region,
 	CharacterProfileProtected,
-	CharacterSpecialization
+	CharacterSpecialization,
+	CharacterProfessions
 } from './wow';
 
 type ResourceResponse<T> = Promise<{ data: T }>;
@@ -33,12 +34,15 @@ const limiter = new RateLimiterMemory({
 	duration: 1
 });
 
+export const BATTLE_NET_REGION = 'us';
+export const BATTLE_NET_LOCALE = 'en_US';
+
 const wowClient = await wow.createInstance(
 	{
 		key: BATTLE_NET_CLIENT_ID,
 		secret: BATTLE_NET_CLIENT_SECRET,
-		origin: 'us',
-		locale: 'en_US'
+		origin: BATTLE_NET_REGION,
+		locale: BATTLE_NET_LOCALE
 	},
 	false
 );
@@ -94,14 +98,25 @@ const charToNameRealm = (char: Character) => ({
 	realm: char.realm.slug
 });
 
+async function optionalCharacterResource<T>(request: () => ResourceResponse<T>): Promise<T | null> {
+	try {
+		return await run(request);
+	} catch (error) {
+		if (error instanceof core.ResponseError && error.response.status === 404) return null;
+		throw error;
+	}
+}
+
 export const api = {
 	checkAuth,
 	profile: (token: string) => run(() => wowClient.accountProfile<Profile>({ token })),
 	character: {
 		profile: (char: Character) =>
-			run(() => wowClient.characterProfile<CharacterProfile>(charToNameRealm(char))),
+			optionalCharacterResource(() =>
+				wowClient.characterProfile<CharacterProfile>(charToNameRealm(char))
+			),
 		protected: (char: Character, token: string) =>
-			run(() =>
+			optionalCharacterResource(() =>
 				wowClient.accountCharacterProfile<CharacterProfileProtected>({
 					character: char.id,
 					realm: char.realm.id,
@@ -109,7 +124,13 @@ export const api = {
 				})
 			),
 		media: (char: Character) =>
-			run(() => wowClient.characterMedia<CharacterMedia>(charToNameRealm(char))),
+			optionalCharacterResource(() =>
+				wowClient.characterMedia<CharacterMedia>(charToNameRealm(char))
+			),
+		professions: (char: Character) =>
+			optionalCharacterResource(() =>
+				wowClient.characterProfessions<CharacterProfessions>(charToNameRealm(char))
+			),
 		spec: (char: Character) =>
 			run(() => wowClient.characterSpecializations<CharacterSpecialization>(charToNameRealm(char)))
 	},

@@ -1,4 +1,5 @@
 import { defineConfig } from '@trigger.dev/sdk';
+import { triggerkit } from 'triggerkit';
 
 export default defineConfig({
 	project: 'proj_gvdalnmsaylsetpfjzvj',
@@ -17,6 +18,9 @@ export default defineConfig({
 			factor: 2,
 			randomize: true
 		}
+	},
+	build: {
+		extensions: [triggerkit()]
 	},
 	dirs: ['src/lib/trigger']
 });
