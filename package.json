@@ -52,7 +52,7 @@
 		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.7",
 		"tailwindcss": "^4.3.3",
-		"trigger.dev": "^4.8.2",
+		"trigger.dev": "4.8.8",
 		"triggerkit": "github:wogan/triggerkit#main",
 		"ts-node": "^10.9.2",
 		"typescript": "^6.0.3",

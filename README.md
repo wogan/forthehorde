@@ -4,7 +4,7 @@ World of Warcraft related website
 
 ## Development
 
-Install dependencies with `npm install`.
+Use the Node version in `.nvmrc` and install dependencies with `npm ci`.
 
 Start a development server (runs the app and the trigger.dev local worker concurrently):
 

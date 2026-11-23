@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      trigger-dev:
+        patterns:
+          - '@trigger.dev/sdk'
+          - 'trigger.dev'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

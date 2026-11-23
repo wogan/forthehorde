@@ -26,7 +26,7 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Install dependencies
-        run: npm install --no-package-lock
+        run: npm ci
 
       - name: Lint
         run: npm run lint
@@ -63,7 +63,7 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Install dependencies
-        run: npm install --no-package-lock
+        run: npm ci
 
       - name: Set up Supabase CLI
         uses: supabase/setup-cli@v1
@@ -87,7 +87,7 @@ jobs:
         run: npx svelte-kit sync
 
       - name: Deploy Trigger.dev tasks
-        run: npx --yes trigger.dev@4.8.8 deploy --env prod
+        run: npx --no-install trigger deploy --env prod
         env:
           TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
 
