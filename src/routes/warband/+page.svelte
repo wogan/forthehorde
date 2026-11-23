@@ -100,14 +100,14 @@
 											{#if media.avatar}
 												<img src={media.avatar} alt="" class="avatar" loading="lazy" />
 											{:else}
-												<span class="avatar avatar-placeholder" aria-hidden="true"
-													>{c.name.charAt(0)}</span
-												>
+												<span class="avatar avatar-placeholder" aria-hidden="true">
+													{c.name.charAt(0)}
+												</span>
 											{/if}
 										{:catch}
-											<span class="avatar avatar-placeholder" aria-hidden="true"
-												>{c.name.charAt(0)}</span
-											>
+											<span class="avatar avatar-placeholder" aria-hidden="true">
+												{c.name.charAt(0)}
+											</span>
 										{/await}
 										<div class="character-name">
 											<strong>{c.name}</strong>

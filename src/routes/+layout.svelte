@@ -22,12 +22,17 @@
 				<a
 					href={resolve('/warband')}
 					aria-current={page.url.pathname === '/warband' ? 'page' : undefined}
-					data-sveltekit-preload-data={false}>Warband</a
+					data-sveltekit-preload-data={false}
 				>
+					Warband
+				</a>
 			{/if}
-			<a href={resolve('/about')} aria-current={page.url.pathname === '/about' ? 'page' : undefined}
-				>About</a
+			<a
+				href={resolve('/about')}
+				aria-current={page.url.pathname === '/about' ? 'page' : undefined}
 			>
+				About
+			</a>
 		</nav>
 		{#if loggedin}
 			<form method="POST" action={resolve('/logout')}>
